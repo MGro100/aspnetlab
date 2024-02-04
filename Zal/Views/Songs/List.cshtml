@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<Zal.Models.Entities.Song>
+
+<h1>All Songs</h1>
+
+<div class="mt-3">
+    <a class="btn btn-primary" asp-controller="Songs" asp-action="Add">Add New Song</a>
+</div>
+
+@using (Html.BeginForm("List", "Songs", FormMethod.Get))
+{
+    <b>Search By:</b>
+    @Html.RadioButton("searchBy", "Artist", true) <text>Artist </text>
+    @Html.RadioButton("searchBy", "SongName") <text>Song Name </text>
+    @Html.RadioButton("searchBy", "Album") <text>Album </text>
+    @Html.RadioButton("searchBy", "Year") <text>Year </text>
+    <p>
+        @Html.TextBox("search") <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>@Html.ActionLink("Artist", "List", new { sortBy = ViewBag.SortArtistParm })</th>
+            <th>@Html.ActionLink("Song Name", "List", new { sortBy = ViewBag.SortSongNameParm })</th>
+            <th>@Html.ActionLink("Album", "List", new { sortBy = ViewBag.SortAlbumParm })</th>
+            <th>@Html.ActionLink("Year", "List", new { sortBy = ViewBag.SortYearParm })</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+        <tr>
+            <td colspan="6">No rows match criteria</td>
+        </tr>    
+        }
+        else {
+            foreach (var song in Model)
+            {
+             <tr>
+                 <td>@Html.DisplayFor(modelItem => song.Id)</td>
+                 <td>@Html.DisplayFor(modelItem => song.Artist)</td>
+                 <td>@Html.DisplayFor(modelItem => song.SongName)</td>
+                 <td>@Html.DisplayFor(modelItem => song.Album)</td>
+                 <td>@Html.DisplayFor(modelItem => song.Year)</td>
+                 <td>
+                     <a class="btn btn-primary" asp-controller="Songs" asp-action="Edit" asp-route-id="@song.Id">Edit</a>
+                 </td>
+             </tr>
+            }
+        }
+    </tbody>
+</table>

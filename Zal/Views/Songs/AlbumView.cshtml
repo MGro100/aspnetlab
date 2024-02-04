@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<Zal.Models.Entities.Song>
+
+<script>
+    // Client-side script for sorting
+    $(document).ready(function () {
+        $('th').click(function () {
+            var column = $(this).attr('data-column');
+            window.location.href = '/Table/Index?sortBy1=' + column;
+        });
+    });
+</script>
+
+<h2>Table View</h2>
+
+<table class="table">
+    <tr>
+        <th data-column="AlbumName">Album Name</th>
+        <th data-column="Year">Year</th>
+        <th data-column="Artist">Artist</th>
+        <th>Song Name</th>
+        
+    </tr>
+
+    @foreach (var song in Model)
+    {
+        <tr>
+            <td>@song.Album</td>
+            <td>@song.Year</td>
+            <td>@song.Artist</td>
+            <td>@song.SongName</td>
+        </tr>
+    }
+</table>
